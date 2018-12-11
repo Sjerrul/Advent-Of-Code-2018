@@ -1,9 +1,7 @@
 import numpy as np
+import common
 
-with open("input.txt", "r") as f:
-    content = f.readlines()
-
-content = [x.strip() for x in content]
+content = common.read_file_lines("input.txt")
 
 frequencyChanges = []
 for value in content:
