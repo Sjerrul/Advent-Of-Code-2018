@@ -1,4 +1,5 @@
 import numpy as np
+
 import common
 
 content = common.read_file_lines("input.txt")
@@ -8,19 +9,17 @@ for value in content:
     frequencyChanges.append(int(value))
 
 frequency = 0
-seenFrequencies = []
+seenFrequencies = dict()
 print("starting...")
-frequencySeen = False;
-loops = 0
+frequencySeen = False
+
 while not frequencySeen:
     frequency += frequencyChanges[0]
     if frequency in seenFrequencies:
         frequencySeen = True
-    else:     
-        seenFrequencies.append(frequency)
+    else:
+        seenFrequencies[frequency] = 1
         frequencyChanges = np.roll(frequencyChanges, -1)
-    loops += 1
     
 print(frequency)
-print(loops)
 
