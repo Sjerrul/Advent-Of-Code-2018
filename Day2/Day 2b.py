@@ -1,6 +1,8 @@
-import common
-import itertools
 from collections import defaultdict
+
+import itertools
+
+from common import input_parser
 
 
 def get_difference_count(item1, item2):
@@ -11,7 +13,7 @@ def get_difference_count(item1, item2):
     return difference
 
 
-boxIds = common.read_file_lines("input.txt")
+boxIds = input_parser.read_file_lines("input.txt")
 
 differenceScores = defaultdict()
 for a, b in itertools.combinations(boxIds, 2):
@@ -21,12 +23,12 @@ indexOfLowestDifference = min(differenceScores, key=differenceScores.get)
 
 print("Most similar", indexOfLowestDifference, differenceScores[indexOfLowestDifference])
 
-endresult = ""
+end_result = ""
 
 for index, char in enumerate(indexOfLowestDifference[0]):
-    print("comparing",indexOfLowestDifference[1][index], char )
+    print("comparing", indexOfLowestDifference[1][index], char )
     if indexOfLowestDifference[1][index] == char:
-        endresult = endresult + char
+        end_result = end_result + char
 
-print("endResult:", endresult)
+print("endResult:", end_result)
 

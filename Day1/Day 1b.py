@@ -1,25 +1,20 @@
 import numpy as np
 
-import common
+from common import input_parser
 
-content = common.read_file_lines("input.txt")
 
-frequencyChanges = []
-for value in content:
-    frequencyChanges.append(int(value))
+frequency_changes = input_parser.read_file_lines_as_int("input.txt")
 
 frequency = 0
-seenFrequencies = dict()
-print("starting...")
-frequencySeen = False
+frequencies_seen = np.empty(0, dtype=np.int)
 
-while not frequencySeen:
-    frequency += frequencyChanges[0]
-    if frequency in seenFrequencies:
-        frequencySeen = True
+frequency_seen = False
+while not frequency_seen:
+    frequency += frequency_changes[0]
+    if frequency in frequencies_seen:
+        frequency_seen = True
     else:
-        seenFrequencies[frequency] = 1
-        frequencyChanges = np.roll(frequencyChanges, -1)
-    
-print(frequency)
+        frequencies_seen = np.append(frequencies_seen, frequency)
+        frequency_changes = np.roll(frequency_changes, -1)
 
+print(frequency)

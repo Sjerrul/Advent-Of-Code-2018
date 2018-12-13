@@ -1,7 +1,9 @@
-import common
 from collections import defaultdict
 
-boxIds = common.read_file_lines("input.txt")
+from common import input_parser
+
+
+boxIds = input_parser.read_file_lines("input.txt")
 
 parsedBoxIds = []
 

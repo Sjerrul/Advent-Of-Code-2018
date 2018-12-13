@@ -1,13 +1,15 @@
-import common
+from common import day1
+from common import input_parser
 
-content = common.read_file_lines("input.txt")
 
-frequencyChanges = []
-for value in content:
-    frequencyChanges.append(int(value))
+frequency_changes = input_parser.read_file_lines_as_int("input.txt")
 
-frequency = 0
-for change in frequencyChanges:
-    frequency += change
+start_frequency = 0
+result = day1.apply_frequency_changes(start_frequency, frequency_changes)
 
-print("Frequency after changes:", frequency)
+print("Frequency after changes:", result)
+
+
+
+
+
