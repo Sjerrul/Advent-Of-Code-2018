@@ -1,62 +1,9 @@
 import operator
-import datetime
-import re
 
-from common import input_parser
+from common import input_parser, utilities as util
 
-
-class Entry(object):
-    date = None
-    guard = None
-    awake = None
-
-    def __init__(self, line):
-        parts = line.split("] ")
-
-        datetime_part = parts[0][1:].split(" ")
-        date_parts = datetime_part[0].split("-")
-        time_parts = datetime_part[1].split(":")
-
-        self.date = datetime.datetime(int(date_parts[0]), int(date_parts[1]),
-                                      int(date_parts[2]), int(time_parts[0]), int(time_parts[1]))
-
-        if "#" in parts[1]:
-            self.guard = int(re.search('#(.*) begins', parts[1]).group(1))
-
-        if "asleep" in parts[1]:
-            self.awake = False
-
-        if "wakes" in parts[1]:
-            self.awake = True
-
-    def __repr__(self):
-        return "Entry %s - Guard #%s - status: %s" % (self.date, self.guard, self.awake)
-
-
-class Guard(object):
-    id = None
-    minutes = [60]
-
-    def __init__(self, id_):
-        self.id = id_
-        self.minutes = [0]*60
-
-    def __repr__(self):
-        return "<Guard #%s - %s>" % (self.id, self.minutes)
-
-    def get_minutes_sleeping(self):
-        return sum(self.minutes)
-
-def contains(list, filter):
-    for x in list:
-        if filter(x):
-            return True
-    return False
-
-
-def get_single(list, filter):
-    return [x for x in list if filter]
-
+from day4.logic.Entry import Entry
+from day4.logic.Guard import Guard
 
 puzzle_input = input_parser.read_file_lines("input.txt")
 
@@ -77,7 +24,7 @@ minute_waking_up = None
 
 for entry in entries:
     if entry.guard is not None:
-        if contains(guards, lambda g: g.id == entry.guard):
+        if util.contains(guards, lambda g: g.id == entry.guard):
             current_guard = [x for x in guards if x.id == entry.guard][0]
             continue
         else:

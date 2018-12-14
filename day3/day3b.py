@@ -50,30 +50,38 @@ def print_matrix(matrix):
         line = ""
 
 
-content = input_parser.read_file_lines("input.txt")
-claims = parse_input(content)
+if __name__ == '__main__':
+    content = input_parser.read_file_lines("input.txt")
+    claims = parse_input(content)
 
-matrix = generate_matrix(1000)
-print_matrix(matrix)
+    matrix = generate_matrix(1000)
+    print_matrix(matrix)
 
-for claim in claims:
-    x_indexes = range(claim.x, claim.x + claim.width)
-    y_indexes = range(claim.y, claim.y + claim.height)
+    for claim in claims:
+        x_indexes = range(claim.x, claim.x + claim.width)
+        y_indexes = range(claim.y, claim.y + claim.height)
 
-    print(x_indexes)
-    print(y_indexes)
+        print(x_indexes)
+        print(y_indexes)
 
-    for x in x_indexes:
-        for y in y_indexes:
-            matrix[x][y] = matrix[x][y] + 1
+        for x in x_indexes:
+            for y in y_indexes:
+                matrix[x][y] = matrix[x][y] + 1
 
-print_matrix(matrix)
+    print_matrix(matrix)
 
-inches_double_claimed = 0
-for x in range(0, len(matrix[0])):
-    for y in range(0, len(matrix[0])):
-        if matrix[x][y] >= 2:
-            inches_double_claimed += 1
+    for claim in claims:
+        x_indexes = range(claim.x, claim.x + claim.width)
+        y_indexes = range(claim.y, claim.y + claim.height)
 
-print("inches claimed by two or more claims", inches_double_claimed)
+        overlaps = False
+        for x in x_indexes:
+            for y in y_indexes:
+                if matrix[x][y] >= 2:
+                    overlaps = True
+                    break
+
+        if not overlaps:
+            print(claim)
+
 
