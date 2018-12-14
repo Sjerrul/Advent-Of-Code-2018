@@ -20,3 +20,8 @@ def read_file_lines_as_int(file_path):
         values.append(int(value))
 
     return values
+
+
+def read_file_as_string(file_path):
+    with open(file_path, "r") as f:
+        return f.read()
