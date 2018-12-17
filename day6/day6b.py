@@ -25,44 +25,16 @@ if __name__ == '__main__':
         m.plot_point(index, coordinate)
         coordinate_ids.append(index)
 
-    print("calculating closest plotted point")
+    max_distance = 10000
+    region_size = 0
     for x in range(0, m.width):
         for y in range(0, m.height):
-            closest_coordinate = None
-            closest_distance = sys.maxsize
-
+            total_distance_to_all = 0
             for index, coordinate in enumerate(coordinates):
-                distance_to_coordinate = calculations.manhattan_distance((x, y), coordinate)
-                if distance_to_coordinate < closest_distance:
-                    closest_distance = distance_to_coordinate
-                    closest_coordinate = index
+                total_distance_to_all += calculations.manhattan_distance((x, y), coordinate)
 
-                    m.plot_point(closest_coordinate, (x, y))
-                elif distance_to_coordinate == closest_distance:
-                    m.plot_point(-2, (x, y))
+            if total_distance_to_all <= max_distance:
+                region_size += 1
 
 
-    m.print(True)
-
-    print("removing edge coordinates from possibility list")
-    print(coordinate_ids)
-    for x in range(0, m.width):
-        for y in range(0, m.height):
-            if (x == 0 or x == m.width - 1 or y == 0 or y == m.height - 1) and (m.grid[x][y] in coordinate_ids):
-                coordinate_ids.remove(m.grid[x][y])
-
-    print("leftover possibilities:", coordinate_ids)
-    print("number of leftover possibilties:", len(coordinate_ids))
-
-    print("calculating areas")
-    areas = dict()
-    for x in range(0, m.width):
-        for y in range(0, m.height):
-            if m.grid[x][y] in coordinate_ids:
-                if m.grid[x][y] not in areas:
-                    areas[m.grid[x][y]] = 1
-                else:
-                    areas[m.grid[x][y]] += 1
-
-    for a in areas:
-        print(a, areas[a])
+    print(region_size)
